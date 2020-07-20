@@ -1,4 +1,4 @@
-# random walk simulator in one dimension
+# Random walk simulator in one dimension with N steps each of step size 1
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,7 +15,8 @@ size = int(input("Enter the ensemble size (number of walkers or number of times 
 @jit(nopython=True)
 def random_walk_one_dim(n, p, z) :
     """ simulates an n-step one dimensional random walk with an ensemble size z, p is the probability to go right
-    n : positive integer, p : float, z : positive integer (larger the z value more accurate is the simulation) """
+    n : positive integer, p : float, z : positive integer (larger the z value more accurate is the simulation) 
+    returns a (z, 1) array of the endpoints of the walk"""
 
     global start
     
@@ -30,34 +31,36 @@ def random_walk_one_dim(n, p, z) :
     return end
 
 @jit(nopython=True)
-def rms_distance(end_points) :
-    """ returs the rms distance from the starting point """
+def rms_distance(points) :
+    """ returs the root-mean-squared distance from the starting point 
+    points : one dimensional array of ensemble size """
     global size
 
     sq = 0
     for i in range(size) :
-        sq += end_points[i]**2
+        sq += points[i]**2
     mean = sq / size
     rms = np.sqrt(mean)
     return rms
 
 @jit(nopython=True)
-def mean_sq_distance(end_points) :
-    """ returs the mean squared distance from the starting point """
+def mean_sq_distance(points) :
+    """ returs the mean-squared distance from the starting point 
+    points : one dimensional array of ensemble size """
     global size
 
     sq = 0
     for i in range(size) :
-        sq += end_points[i]**2
+        sq += points[i]**2
     mean = sq / size
     return mean
 
 # result for fixed N simulation
-points = random_walk_one_dim(N, prob, size)
-print("The rms distance for {} steps is = {}".format(N, rms_distance(points)))
+end_points = random_walk_one_dim(N, prob, size)
+print("The rms distance for {} steps is = {}".format(N, rms_distance(end_points)))
 
-n, bins, _ = plt.hist(points, bins='auto', density=True, histtype='stepfilled', facecolor='g', alpha=0.75)
-mu, sigma = norm.fit(points)                                                                        # mean and standard devidation of Gaussian 
+n, bins, _ = plt.hist(end_points, bins='auto', density=True, histtype='stepfilled', facecolor='g', alpha=0.75)
+mu, sigma = norm.fit(end_points)                                                                        # mean and standard devidation of Gaussian 
 best_fit_line = (max(n) / max(norm.pdf(bins, mu, sigma)))*norm.pdf(bins, mu, sigma)                 # Gaussian fit to the histogram
 plt.title(r"Histogram of random walk with N = %.i steps (fitted with $\mu = %.3f,\ \sigma = %.3f )$" %(N, mu, sigma))
 plt.plot(bins, best_fit_line)
