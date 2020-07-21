@@ -13,10 +13,12 @@ def walk_one_dim() :
         s += 1*(r<prob) + (-1)*(r>prob)             # describes the walk
         walk = np.append(walk, [s])
     steps = np.linspace(0, N, N)
-    plt.scatter(steps, walk, alpha=0.2, s=0.1, color='red')
-    plt.savefig('random_walk_1D.png', dpi=1200)
-
-    
+    plt.scatter(steps, walk, alpha=0.5, s=0.1, color='blue')
+    plt.title("1D random walk with {} steps".format(N))
+    plt.xlabel("steps")
+    plt.ylabel("position")
+    plt.show()
+    #plt.savefig('random_walk_1D.png', dpi=1200)
 
 def walk_two_dim() :
     """ gives a visual representation of the two dimensional random walk with N steps """
@@ -29,9 +31,12 @@ def walk_two_dim() :
         y += sin(2*pi*t)
         walk[i][0] = x
         walk[i][1] = y
-    plt.plot(walk[:,0], walk[:,1], linewidth=0.2, color='cyan')
+    plt.plot(walk[:,0], walk[:,1], linewidth=0.2, color='blue')
     plt.scatter(walk[:,0], walk[:,1], s=0.1, color='black')
-    plt.savefig('random_walk_2D.png', dpi=1200)
+    plt.title("2D random walk with {} steps".format(N))
+    #plt.savefig('random_walk_2D.png', dpi=1200)
+    plt.show()
+
 
 def walk_three_dim() :
     """ gives a visual representation of the three dimensional random walk with N steps """
@@ -50,12 +55,16 @@ def walk_three_dim() :
     ax = plt.axes(projection='3d')
     ax.plot3D(walk[:,0], walk[:,1], walk[:,2], linewidth=0.2, color='blue')
     #ax.scatter3D(walk[:,0], walk[:,1], walk[:,2], s=0.1, color='black')
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+    ax.set_zlabel("z")
+    ax.set_title("3D random walk with {} steps".format(N))
     plt.show()
     
 
 if __name__ == "__main__" :
     # parameters
-    N = int(input("Enter the (maximum) number of steps : "))                                                            # (maximum) number of steps
+    N = int(input("Enter the number of steps : "))                                                            # (maximum) number of steps
     prob = 0.5 # float(input("Enter the probability to move to the right : "))                                          # probability of taking a step to the right
     dim = int(input("Enter the number of dimensions (possible values = 1, 2 or 3) : "))
     if dim == 1 :
