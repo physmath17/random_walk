@@ -47,7 +47,9 @@ def random_walk_one_dim(n, p, z) :
 def mean_sq_distance(points) :
     """ returs the mean-squared distance from the starting point 
     points : one dimensional array of ensemble size """
+    
     global size
+    
     sq = 0
     for i in range(size) :
         sq += points[i]**2
