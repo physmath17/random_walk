@@ -2,7 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from os import urandom
+from numba import jit
 from scipy.stats import norm
 from datetime import datetime
 
@@ -15,6 +15,7 @@ prob = float(input("Enter the probability to move to the right : "))            
 size = int(input("Enter the ensemble size (number of walkers or number of times the walk is repeated) : "))          # ensemble size 
 
 # function definitions
+@jit(nopython=True)
 def random_walk_one_dim(n, p, z) :
     """ simulates an n-step one dimensional random walk with an ensemble size z, p is the probability to go right
     n : positive integer, p : float, z : positive integer (larger the z value more accurate is the simulation) 
@@ -26,7 +27,7 @@ def random_walk_one_dim(n, p, z) :
     for j in range(z) :                                 # loops through the number of ensemble size
         s = start                                       # initializing the walk
         for i in range(n) :                             # loops through the number of steps
-            r = int.from_bytes(urandom(8), byteorder="big") / ((1 << 64) - 1)                       # random number to decide whether the walker goes left or right
+            r = np.random.rand()                        # random number to decide whether the walker goes left or right
             s += 1*(r<p) + (-1)*(r>p)                      # describes the walk
         end = np.append(end, [s])
     
@@ -36,7 +37,9 @@ def random_walk_one_dim(n, p, z) :
 # def rms_distance(points) :
 #     """ returs the root-mean-squared distance from the starting point 
 #     points : one dimensional array of ensemble size """
+
 #     global size
+
 #     sq = 0
 #     for i in range(size) :
 #         sq += points[i]**2
@@ -44,10 +47,13 @@ def random_walk_one_dim(n, p, z) :
 #     rms = np.sqrt(mean)
 #     return rms
 
+@jit(nopython=True)
 def mean_sq_distance(points) :
     """ returs the mean-squared distance from the starting point 
     points : one dimensional array of ensemble size """
+    
     global size
+
     sq = 0
     for i in range(size) :
         sq += points[i]**2

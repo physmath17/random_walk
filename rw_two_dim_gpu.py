@@ -48,17 +48,17 @@ def random_walk_two_dim(n, z) :
 
     return end
     
-@jit(nopython=True)
-def rms_distance(points, z) :
-    """ returs the root-mean-squared distance from the starting point 
-    z: integer, end_points : (z, 2) array """
+# @jit(nopython=True)
+# def rms_distance(points, z) :
+#     """ returs the root-mean-squared distance from the starting point 
+#     z: integer, end_points : (z, 2) array """
 
-    sq = 0
-    for i in range(z) :
-        sq += points[i][0]**2 + points[i][1]
-    mean = sq / z
-    rms = np.sqrt(mean)
-    return rms
+#     sq = 0
+#     for i in range(z) :
+#         sq += points[i][0]**2 + points[i][1]
+#     mean = sq / z
+#     rms = np.sqrt(mean)
+#     return rms
 
 @jit(nopython=True)
 def mean_sq_distance(points, z) :
