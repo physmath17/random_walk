@@ -12,8 +12,10 @@ import numpy as np
 from numpy import sin, cos, pi
 from os import urandom
 import matplotlib.pyplot as plt
+from mpl_toolkits import mplot3d
 from scipy.stats import norm
 from datetime import datetime
+from mpl_toolkits import mplot3d
 
 # parameters
 x0 = float(input("Enter the x-coordinate of the starting position : "))  

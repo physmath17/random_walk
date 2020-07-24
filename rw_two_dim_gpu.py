@@ -11,6 +11,7 @@ We will use the latter approach to implement the walk.
 import numpy as np
 from numpy import sin, cos, pi
 import matplotlib.pyplot as plt
+from mpl_toolkits import mplot3d
 from numba import jit
 from scipy.stats import norm
 from datetime import datetime
