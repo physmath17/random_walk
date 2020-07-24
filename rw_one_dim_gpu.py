@@ -6,12 +6,11 @@ from numba import jit
 from scipy.stats import norm
 from datetime import datetime
 
-
 # parameters
 start = float(input("Enter the starting position : "))                                                              # starting point of the walk
 N = int(input("Enter the (maximum) number of steps : "))                                                            # (maximum) number of steps
 prob = float(input("Enter the probability to move to the right : "))                                                # probability of taking a step to the right
-size = int(input("Enter the ensemble size (number of walkers or number of times the walk is repeated) : "))          # ensemble size 
+size = int(input("Enter the ensemble size (number of walkers or number of times the walk is repeated) : "))         # ensemble size 
 
 startTime = datetime.now()
 
@@ -24,12 +23,12 @@ def random_walk_one_dim(n, p, z) :
 
     global start
     
-    end = np.array([np.float64(x) for x in range(0)])     # stores the endpoints of the walks
+    end = np.array([np.float64(x) for x in range(0)])   # stores the endpoints of the walks
     for j in range(z) :                                 # loops through the number of ensemble size
         s = start                                       # initializing the walk
         for i in range(n) :                             # loops through the number of steps
             r = np.random.rand()                        # random number to decide whether the walker goes left or right
-            s += 1*(r<p) + (-1)*(r>p)                      # describes the walk
+            s += 1*(r<p) + (-1)*(r>p)                   # describes the walk
         end = np.append(end, [s])
     
     return end
@@ -66,7 +65,7 @@ end_points = random_walk_one_dim(N, prob, size)
 print("The rms distance for {} steps is = {}".format(N, np.sqrt(mean_sq_distance(end_points))))
 
 n, bins, _ = plt.hist(end_points, bins='auto', density=True, histtype='stepfilled', facecolor='g', alpha=0.75)
-mu, sigma = norm.fit(end_points)                                                                        # mean and standard devidation of Gaussian 
+mu, sigma = norm.fit(end_points)                                                                    # mean and standard devidation of Gaussian 
 best_fit_line = (max(n) / max(norm.pdf(bins, mu, sigma)))*norm.pdf(bins, mu, sigma)                 # Gaussian fit to the histogram
 plt.title(r"Histogram of random walk with N = %.i steps (fitted with $\mu = %.3f,\ \sigma = %.3f )$" %(N, mu, sigma))
 plt.plot(bins, best_fit_line)

@@ -15,7 +15,6 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 from datetime import datetime
 
-
 # parameters
 x0 = float(input("Enter the x-coordinate of the starting position : "))  
 y0 = float(input("Enter the y-coordinate of the starting position : "))  

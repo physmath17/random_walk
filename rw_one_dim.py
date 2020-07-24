@@ -6,7 +6,6 @@ from os import urandom
 from scipy.stats import norm
 from datetime import datetime
 
-
 # parameters
 start = float(input("Enter the starting position : "))                                                              # starting point of the walk
 N = int(input("Enter the (maximum) number of steps : "))                                                            # (maximum) number of steps
@@ -23,12 +22,12 @@ def random_walk_one_dim(n, p, z) :
 
     global start
     
-    end = np.array([np.float64(x) for x in range(0)])     # stores the endpoints of the walks
+    end = np.array([np.float64(x) for x in range(0)])   # stores the endpoints of the walks
     for j in range(z) :                                 # loops through the number of ensemble size
         s = start                                       # initializing the walk
         for i in range(n) :                             # loops through the number of steps
             r = int.from_bytes(urandom(8), byteorder="big") / ((1 << 64) - 1)    # random number to decide whether the walker goes left or right
-            s += 1*(r<p) + (-1)*(r>p)                      # describes the walk
+            s += 1*(r<p) + (-1)*(r>p)                   # describes the walk
         end = np.append(end, [s])
     
     return end
