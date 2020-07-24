@@ -6,13 +6,14 @@ from numba import jit
 from scipy.stats import norm
 from datetime import datetime
 
-startTime = datetime.now()
 
 # parameters
 start = float(input("Enter the starting position : "))                                                              # starting point of the walk
 N = int(input("Enter the (maximum) number of steps : "))                                                            # (maximum) number of steps
 prob = float(input("Enter the probability to move to the right : "))                                                # probability of taking a step to the right
 size = int(input("Enter the ensemble size (number of walkers or number of times the walk is repeated) : "))          # ensemble size 
+
+startTime = datetime.now()
 
 # function definitions
 @jit(nopython=True)
@@ -73,11 +74,13 @@ plt.xlabel("Position")
 plt.ylabel("Probability Distribution")
 plt.show()
 
-# result for mean squared distance vs N
-dist_sq = np.array([0. for x in range(0, N + 1)])
-n = np.array([x for x in range(0, N + 1)])
+endTime = datetime.now()
 
-for i in range(0, N + 1) :
+# result for mean squared distance vs N
+dist_sq = np.array([0. for x in range(N + 1)])
+n = np.array([x for x in range(N + 1)])
+
+for i in range(N + 1) :
     data = random_walk_one_dim(i, prob, size)
     dist_sq[i] = mean_sq_distance(data)
 
@@ -88,4 +91,4 @@ plt.ylabel("mean squared distance from origin")
 plt.xticks(n)
 plt.show()
 
-print("Execution time : ", datetime.now() - startTime)
+print("Execution time : ", endTime - startTime)

@@ -10,8 +10,8 @@ We will use the latter approach to implement the walk.
 
 import numpy as np
 from numpy import sin, cos, pi
+from os import urandom
 import matplotlib.pyplot as plt
-from numba import jit
 from scipy.stats import norm
 from datetime import datetime
 
@@ -25,7 +25,6 @@ size = int(input("Enter the ensemble size (number of walkers or number of times 
 startTime = datetime.now()
 
 # function definitions
-@jit(nopython=True)
 def random_walk_two_dim(n, z) :
     """ simulates an n-step two dimensional random walk with an ensemble size z,
     n : positive integer, z : positive integer 
@@ -38,7 +37,7 @@ def random_walk_two_dim(n, z) :
     for j in range(1, z) :
         x, y = x0, y0
         for i in range(n) :
-            s = np.random.rand()
+            s = int.from_bytes(urandom(8), byteorder="big") / ((1 << 64) - 1) 
             t = 2*pi*s
             x += cos(t)
             y += sin(t)
@@ -47,7 +46,6 @@ def random_walk_two_dim(n, z) :
 
     return end
     
-# @jit(nopython=True)
 # def rms_distance(points, z) :
 #     """ returs the root-mean-squared distance from the starting point 
 #     z: integer, end_points : (z, 2) array """
@@ -59,7 +57,6 @@ def random_walk_two_dim(n, z) :
 #     rms = np.sqrt(mean)
 #     return rms
 
-@jit(nopython=True)
 def mean_sq_distance(points, z) :
     """ returns the mean-squared distance from the starting point 
     z: integer, end_points : (z, 2) array """
@@ -89,6 +86,8 @@ plt.show()
 endTime = datetime.now()
 
 # result for fixed N simulation
-
+end_points = random_walk_two_dim(N, size)
+plt.hist(end_points)
+plt.show()
 
 print("Execution time : ", endTime - startTime)
