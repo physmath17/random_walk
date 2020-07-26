@@ -69,8 +69,6 @@ plt.xlabel("Position")
 plt.ylabel("Probability Distribution")
 plt.show()
 
-endTime = datetime.now()
-
 # result for mean squared distance vs N
 dist_sq = np.array([0. for x in range(N + 1)])
 n = np.array([x for x in range(N + 1)])
@@ -85,5 +83,7 @@ plt.xlabel("number of steps")
 plt.ylabel("mean squared distance from origin")
 plt.xticks(n)
 plt.show()
+
+endTime = datetime.now()
 
 print("Execution time : ", endTime - startTime)

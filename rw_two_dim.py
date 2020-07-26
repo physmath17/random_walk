@@ -87,8 +87,8 @@ plt.show()
 endTime = datetime.now()
 
 # result for fixed N simulation
-end_points = random_walk_two_dim(N, size)
-plt.hist(end_points)
-plt.show()
+# end_points = random_walk_two_dim(N, size)
+# plt.hist(end_points)
+# plt.show()
 
 print("Execution time : ", endTime - startTime)
