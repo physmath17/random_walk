@@ -14,7 +14,7 @@ def walk_one_dim() :
         walk = np.append(walk, [s])
     steps = np.linspace(0, N, N)
     plt.scatter(steps, walk, alpha=0.5, s=0.1, color='blue')
-    plt.title("1D random walk with {} steps".format(N))
+    plt.title("1D random walk with {} steps and {} probability to go up".format(N, prob))
     plt.xlabel("steps")
     plt.ylabel("position")
     plt.show()
@@ -65,7 +65,7 @@ def walk_three_dim() :
 if __name__ == "__main__" :
     # parameters
     N = int(input("Enter the number of steps : "))                                                            # (maximum) number of steps
-    prob = 0.5 # float(input("Enter the probability to move to the right : "))                                          # probability of taking a step to the right
+    prob = 0.5 # float(input("Enter the probability to move to the right : "))                                # probability of taking a step to the right
     dim = int(input("Enter the number of dimensions (possible values = 1, 2 or 3) : "))
     if dim == 1 :
         walk_one_dim()
