@@ -89,6 +89,28 @@ plt.show()
 endTime = datetime.now()
 
 # result for fixed N simulation
+end_points = random_walk_two_dim(N, size)
+plt.hist2d(end_points[:,0], end_points[:,1], bins=20)
+plt.colorbar()
+plt.show()
 
+########### 3D plot of the data ##########
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+hist, xedges, yedges = np.histogram2d(end_points[:,0], end_points[:,1], bins=10)
+# best_fit_line = rv_histogram(hist)               # Gaussian fit to the histogram
+
+# Construct arrays for the anchor positions of the bars.
+xpos, ypos = np.meshgrid(xedges[:-1] + 0.25, yedges[:-1] + 0.25, indexing="ij")
+xpos = xpos.ravel()
+ypos = ypos.ravel()
+zpos = 0
+
+# Construct arrays with the dimensions for the bars.
+dx = dy = 0.5 * np.ones_like(zpos)
+dz = hist.ravel()
+
+ax.bar3d(xpos, ypos, zpos, dx, dy, dz, zsort='average')
+plt.show()
 
 print("Execution time : ", endTime - startTime)

@@ -15,7 +15,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 from scipy.stats import rv_histogram
 from datetime import datetime
-from mpl_toolkits import mplot3d
 
 # parameters
 x0 = float(input("Enter the x-coordinate of the starting position : "))  
@@ -46,17 +45,6 @@ def random_walk_two_dim(n, z) :
         end[j][1] = y
 
     return end
-    
-# def rms_distance(points, z) :
-#     """ returs the root-mean-squared distance from the starting point 
-#     z: integer, end_points : (z, 2) array """
-
-#     sq = 0
-#     for i in range(z) :
-#         sq += points[i][0]**2 + points[i][1]
-#     mean = sq / z
-#     rms = np.sqrt(mean)
-#     return rms
 
 def mean_sq_distance(points, z) :
     """ returns the mean-squared distance from the starting point 
@@ -68,7 +56,7 @@ def mean_sq_distance(points, z) :
     mean = sq / z
     
     return mean
-'''
+
 # result for mean squared distance vs N
 dist_sq = np.array([0. for x in range(N + 1)])
 n = np.array([x for x in range(N + 1)])
@@ -83,15 +71,20 @@ plt.xlabel("number of steps")
 plt.ylabel("mean squared distance from origin")
 plt.xticks(n)
 plt.show()
-'''
+
 endTime = datetime.now()
 
 # result for fixed N simulation
-ax = plt.axes(projection='3d')
-
 end_points = random_walk_two_dim(N, size)
-hist, xedges, yedges = plt.hist2d(end_points[:,0], end_points[:,1], bins=20)
-best_fit_line = rv_histogram(hist)               # Gaussian fit to the histogram
+plt.hist2d(end_points[:,0], end_points[:,1], bins=20)
+plt.colorbar()
+plt.show()
+
+########### 3D plot of the data ##########
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+hist, xedges, yedges = np.histogram2d(end_points[:,0], end_points[:,1], bins=10)
+# best_fit_line = rv_histogram(hist)               # Gaussian fit to the histogram
 
 # Construct arrays for the anchor positions of the bars.
 xpos, ypos = np.meshgrid(xedges[:-1] + 0.25, yedges[:-1] + 0.25, indexing="ij")
@@ -103,8 +96,7 @@ zpos = 0
 dx = dy = 0.5 * np.ones_like(zpos)
 dz = hist.ravel()
 
-#ax.bar3d(xpos, ypos, zpos, dx, dy, dz, zsort='average')
-plt.plot(hist, best_fit_line)
+ax.bar3d(xpos, ypos, zpos, dx, dy, dz, zsort='average')
 plt.show()
 
 print("Execution time : ", endTime - startTime)
