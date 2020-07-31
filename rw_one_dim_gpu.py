@@ -33,20 +33,6 @@ def random_walk_one_dim(n, p, z) :
     
     return end
 
-# @jit(nopython=True)
-# def rms_distance(points) :
-#     """ returs the root-mean-squared distance from the starting point 
-#     points : one dimensional array of ensemble size """
-
-#     global size
-
-#     sq = 0
-#     for i in range(size) :
-#         sq += points[i]**2
-#     mean = sq / size
-#     rms = np.sqrt(mean)
-#     return rms
-
 @jit(nopython=True)
 def mean_sq_distance(points) :
     """ returs the mean-squared distance from the starting point 
